@@ -1,0 +1,142 @@
+/* Only with a unix theme active: web/main.js puts the unix-theme class on <html>.
+   "System" and other themes do not change. */
+/* "waits for you": a straight bar at the session row, no rounding */
+:root.unix-theme .srow.blocked, :root.unix-theme .srow.blocked[aria-current="true"] { box-shadow: none; position: relative; }
+:root.unix-theme .srow.blocked[aria-current="true"] { box-shadow: var(--shadow-plate); }
+:root.unix-theme .srow.blocked::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px; background: var(--calm-attn); }
+:root.unix-theme .srow.blocked .glyph { color: var(--calm-attn); }
+/* the "waits for you" tag and the "Waiting for you · N" pill: outlined in the theme color */
+  /* "To review": the same */
+/* a muted attention color: the hue of the agent glyphs (--primary), softened toward the secondary text */
+:root.unix-theme { --calm-attn: color-mix(in oklab, var(--primary) 60%, var(--muted-foreground)); }
+/* "waits for you", "Waiting for you · N", "answer?": a thin square dash, as on folded feed messages */
+:root.unix-theme .srow .tag, :root.unix-theme .wpill.alarm, :root.unix-theme .wpill.review {
+  /* inverse, like a VT220 status line: a block of the attention color, text in the background color, no border or rounding */
+  background: var(--calm-attn); color: var(--background); border: 0; border-radius: 0; box-shadow: none; font-weight: 400; }
+:root.unix-theme .srow .tag.soft { background: color-mix(in srgb, var(--calm-attn) 70%, var(--background)); }
+:root.unix-theme .wpill.alarm:hover, :root.unix-theme .wpill.review:hover { background: color-mix(in oklab, var(--calm-attn) 85%, var(--foreground)); }
+:root.unix-theme .aside-foot .counts [data-s="wait"]::before { background: var(--calm-attn); }
+/* feed participants: in the theme color, not a hue by name (the service .quiet ones keep their own rule) */
+:root.unix-theme .who:not(.quiet) { --who: var(--primary); --who-soft: color-mix(in oklab, var(--primary) 14%, var(--background)); }
+/* menu item icons (Schedule, Flow, plugin views): in the color of the agent glyphs */
+:root.unix-theme .srow.nav .glyph { color: var(--primary); }
+/* the question card and the "Waiting for you" strip above the input field: the same calm attention color, not the
+   error color; a sparse square dash around the card background */
+:root.unix-theme .card { --dash: color-mix(in srgb, var(--calm-attn) 70%, var(--border)); border: 0; border-radius: 0;
+  background:
+    repeating-linear-gradient(90deg, var(--dash) 0 8px, transparent 8px 11px) top / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, var(--dash) 0 8px, transparent 8px 11px) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(180deg, var(--dash) 0 8px, transparent 8px 11px) left / 1px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--dash) 0 8px, transparent 8px 11px) right / 1px 100% no-repeat,
+    var(--card); }
+:root.unix-theme { --attention: var(--calm-attn); --attention-line: color-mix(in srgb, var(--calm-attn) 70%, var(--border)); }
+/* the header of "session waits for you" cards (the core's --attention strip): inverse, like the "waits for you" tags
+   and a VT220 status line: a block of the attention color, the text and × in the background color */
+:root.unix-theme .card .card-head { background: var(--calm-attn); color: var(--background); }
+:root.unix-theme .card .card-head h3 { font-weight: 400; }
+:root.unix-theme .card-x { color: var(--background); border-radius: 0; }
+:root.unix-theme .card-x:hover { background: color-mix(in srgb, var(--background) 20%, transparent); color: var(--background); }
+:root.unix-theme .strip-row[data-k="wait"] .k { color: var(--calm-attn); }
+:root.unix-theme .strip-row[data-k="wait"] { box-shadow: inset 2px 0 0 var(--calm-attn); }
+/* wider, as in a terminal: the feed and the input field up to 1200px, a text line up to 110 characters (was 800px and 68) */
+:root.unix-theme .feed-inner, :root.unix-theme .dock-inner { max-width: 1200px; }
+:root.unix-theme { --measure: 110ch; }
+/* a caret as in a terminal: a block in the theme color, blinking once a second (caret-shape and caret-animation, Chrome
+   13x+; where they are missing, a regular thin caret in the theme color). With "reduce motion" in the system the block
+   does not blink. */
+:root.unix-theme textarea, :root.unix-theme input[type="text"], :root.unix-theme input[type="search"], :root.unix-theme input:not([type]) {
+  caret-color: var(--primary); caret-shape: block; caret-animation: manual; animation: unix-caret 1s steps(1, end) infinite; }
+@keyframes unix-caret { 50% { caret-color: transparent; } }
+@media (prefers-reduced-motion: reduce) {
+  :root.unix-theme textarea, :root.unix-theme input[type="text"], :root.unix-theme input[type="search"], :root.unix-theme input:not([type]) { animation: none; } }
+/* checkboxes, switches, sliders: in the theme color, not the browser's blue */
+:root.unix-theme { accent-color: var(--primary); }
+/* The flat frame comes from the flat plugin (github.com/flagman/hub-plugin-flat, MIT, Copyright (c) 2026 flagman),
+   only with a unix theme: columns to the window edges, square corners, a thin line of the border color between the
+   columns; small rounding inside, extra outlines removed. The attention plates keep their own look (inverse, rules above). */
+:root.unix-theme .app { padding: 0; column-gap: 0; }
+:root.unix-theme .app.left-folded { padding-left: 0; }
+:root.unix-theme main, :root.unix-theme .side { border-radius: 0; box-shadow: none; }
+:root.unix-theme main, :root.unix-theme .side { border-left: 1px solid var(--border); }
+:root.unix-theme { --radius: 4px; --radius-xs: 3px; --radius-sm: 3px; --radius-lg: 6px; --radius-xl: 8px; --radius-pill: 3px; }
+:root.unix-theme .composer { border-radius: 6px; box-shadow: none; }
+:root.unix-theme :is(.chip, .pill, .srow .count, .gcount, .row.older .btn, .kbd-hint) { border-radius: 3px; }
+:root.unix-theme .account { border-radius: 50%; }
+:root.unix-theme :is(.chip, .kbd-hint, .row.older .btn, .pj-next, .pj-todos) { border-color: transparent !important; }
+:root.unix-theme :is(.pj-next, .pj-todos) { background: transparent; padding-inline: 0; }
+/* selection in your own messages (the plate on the right): in the hub ::selection and the plate background are one color
+   (--front-soft), the selection is invisible, and the next drag carries it like a picture. Here it is clearly brighter
+   than the plate */
+:root.unix-theme .row.mine .b::selection, :root.unix-theme .row.mine .b ::selection {
+  background: color-mix(in oklab, var(--primary) 45%, var(--background)); color: var(--foreground); }
+/* an emoji without its own picture in the theme is a glyph from the theme font (data/emoji-map.json in hub-themes,
+   d60086): in the accent color, like the picture icons, and at the size where a glyph pixel is exactly a screen pixel
+   (a 16px font with font_scale 1.125) */
+:root.unix-theme .srow .avatar:not(.kit-img), :root.unix-theme .byline .av.emoji:not(.kit-img) {
+  color: var(--primary); font-size: calc(16px / 1.125); }
+/* newer hub elements (the search row with ☰, "All | Now", the sections menu, groups and the icon palette, the model and
+   executors menus): in the theme's common flat look, no shadows, a thin border of the border color, small corners */
+:root.unix-theme aside { --row-plate: var(--muted); --row-plate-shadow: 0 0 0 1px var(--border); }
+:root.unix-theme :is(.menu, .nav-pop, .gpop) { box-shadow: none; border: 1px solid var(--input); background: var(--card); }
+:root.unix-theme .nav-pop { top: calc(var(--ctl-h) + var(--space-3) + var(--space-1)); }
+/* "All · N | Now · M": like "Brief | Detailed" in the header, a border around, the chosen tab filled, no plate with a shadow */
+:root.unix-theme .active-bar { background: transparent; box-shadow: inset 0 0 0 1px var(--border); padding: 0; gap: 0; }
+:root.unix-theme .active-bar button { border-radius: 0; }
+:root.unix-theme .active-bar button:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+:root.unix-theme .active-bar button:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+:root.unix-theme .active-bar button[aria-pressed="true"] { background: var(--muted-2); box-shadow: none; font-weight: 400; }
+/* the session icon palette: theme glyphs in the accent color at their native pixel size, as icons in the list; the chosen one outlined */
+:root.unix-theme .pal-e { font-size: calc(16px / 1.125); color: var(--primary); border-radius: var(--radius-sm); }
+:root.unix-theme .pal-e.on { box-shadow: inset 0 0 0 1px var(--primary); }
+:root.unix-theme .pal-own input { box-shadow: none; border: 1px solid var(--border); background: var(--background); }
+:root.unix-theme .gt-edit { border-radius: var(--radius-sm); }
+:root.unix-theme .drag-ghost { transform: none; box-shadow: none; outline: 1px solid var(--input); }
+:root.unix-theme .g-empty { border-radius: 0; }
+/* a card whose question was withdrawn ("frozen"): no attention color, as in the hub; otherwise the header rule above wins */
+:root.unix-theme .card.frozen { --dash: var(--border); }
+:root.unix-theme .card.frozen .card-head { background: var(--muted); color: var(--muted-foreground); }
+/* the "send" button: the Terminus ↲ glyph (the same one draws 🏥 in text) instead of the paper plane; flat, a 1px border,
+   the glyph in the accent color; hover is inverse, like the attention plates. 32px is a native Terminus size (font_scale 1.125) */
+:root.unix-theme .btn.round.send { background: transparent; color: var(--primary); border: 1px solid var(--input); border-radius: var(--radius);
+  transition: none; }
+:root.unix-theme .btn.round.send .icon { display: none; }
+:root.unix-theme .btn.round.send::before { content: "↲"; font: calc(32px / 1.125) / 1 "hub-theme-font", var(--font-mono); }
+:root.unix-theme .btn.round.send:hover { background: var(--primary); color: var(--background); border-color: var(--primary); }
+:root.unix-theme .btn.round.send:active { transform: none; }
+:root.unix-theme .btn.round.stop { border-radius: var(--radius); }
+/* the "Requests to the hub" stickers (the hub-requests plugin): in the theme's flat look, no shadows, a 1px border, small
+   corners, no slide-out animation. A ready answer is inverse, like the attention plates; in progress is muted; long in
+   progress is dashed. The text is at native Terminus sizes (16 and 14px with font_scale 1.125), not bold */
+:root.unix-theme .hrq-card { border: 1px solid var(--input); border-radius: var(--radius); box-shadow: none; transition: none; }
+:root.unix-theme .hrq-card.hrq-new { border-color: var(--calm-attn); }
+:root.unix-theme .hrq-card.hrq-stale { border-style: dashed; border-color: var(--muted-foreground); }
+:root.unix-theme .hrq-mini { border: 0; border-left: 0; border-radius: 0; font: 400 calc(16px / 1.125) / 1 "hub-theme-font", var(--font-mono);
+  letter-spacing: 0; background: var(--card); color: var(--muted-foreground); transition: none; }
+:root.unix-theme .hrq-new .hrq-mini { background: var(--calm-attn); color: var(--background); }
+:root.unix-theme .hrq-rest > .hrq-mini { border: 1px solid var(--input); border-radius: var(--radius); box-shadow: none; }
+:root.unix-theme .hrq-body { font-size: calc(16px / 1.125); gap: 4px; }
+:root.unix-theme .hrq-body:hover { background: var(--muted); }
+:root.unix-theme .hrq-text { font-weight: 400; color: var(--foreground); }
+:root.unix-theme .hrq-meta { font-size: calc(14px / 1.125); }
+:root.unix-theme .hrq-chip { border-radius: 0; padding: 0 4px; background: var(--muted-2); color: var(--muted-foreground); }
+:root.unix-theme .hrq-new .hrq-chip { background: var(--calm-attn); color: var(--background); }
+:root.unix-theme .hrq-stale .hrq-chip { background: transparent; color: var(--muted-foreground); box-shadow: inset 0 0 0 1px var(--muted-foreground); }
+:root.unix-theme .hrq-x { border-radius: 0; font: 400 calc(16px / 1.125) / 1 "hub-theme-font", var(--font-mono); }
+:root.unix-theme .hrq-x:hover { background: var(--calm-attn); color: var(--background); }
+:root.unix-theme .hrq-flash { outline: 1px solid var(--calm-attn); outline-offset: 2px; border-radius: 0; }
+/* the session icon on a sticker tab: a theme font glyph at its native size, in the accent color; on a ready answer, in the background color (inverse) */
+:root.unix-theme .hrq-av { font: 400 calc(16px / 1.125) / 1 "hub-theme-font", var(--font-mono); color: var(--primary); }
+:root.unix-theme .hrq-new .hrq-av { color: var(--background); }
+/* an open sticker slides out to the left of the column (hub-requests 0.4.2): the tab stays in place, flat, with the card's border (color, dash) */
+:root.unix-theme .hrq-item:hover > .hrq-card > .hrq-mini, :root.unix-theme .hrq-card.hrq-on > .hrq-mini {
+  border: 1px solid; border-color: inherit; border-style: inherit; border-radius: var(--radius); box-shadow: none; }
+/* the selected session in the list: no inverse; a --muted plate, a bar on the left and the name in the theme's attention color.
+   Inverting the whole row in "Waiting for you" (up to 6 lines of caption) made a solid slab */
+:root.unix-theme .srow[aria-current="true"], :root.unix-theme .srow.blocked[aria-current="true"] {
+  background: var(--muted); box-shadow: inset 2px 0 0 var(--calm-attn); border-radius: 0; }
+:root.unix-theme .srow[aria-current="true"] .nm { color: var(--calm-attn); }
+:root.unix-theme .srow.blocked[aria-current="true"]::before { display: none; }
+/* no focus ring (the core's :focus-visible, 2px with an offset) around the selected row: the plate with the bar already shows it.
+   Other rows show keyboard focus as a thin border at the row edge, no offset or rounding */
+:root.unix-theme .srow[aria-current="true"]:focus-visible { outline: 0; }
+:root.unix-theme .srow:not([aria-current="true"]):focus-visible { outline: 1px solid var(--foreground); outline-offset: -1px; border-radius: 0; }

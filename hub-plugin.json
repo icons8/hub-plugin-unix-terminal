@@ -1,0 +1,13 @@
+{
+  "name": "unix-terminal",
+  "icon": "icon.png",
+  "description": "Hub themes in the spirit of the unix terminals of the 70s and 80s: a calm phosphor and a calm amber, the Terminus font on the whole page, ASCII avatars of the agents (Terminus signs for the common session emoji)",
+  "why": "The hub as a terminal: even monospace text, soft colors on a dark background, easy on the eyes all day",
+  "version": "1.18.4",
+  "hub": "^1.8",
+  "themes": [
+    "themes/unix-calm-phosphor.json",
+    "themes/unix-calm-amber.json"
+  ],
+  "web": "web/main.js"
+}
